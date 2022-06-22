@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    
+
 
 <head>
     <meta charset="UTF-8">
@@ -8,20 +8,188 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfect-Pizza</title>
     <link rel="stylesheet" href="style.css">
+    <script src="//unpkg.com/alpinejs" defer></script>
 
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="container" x-data="{showCart: true,
+        smallPizzaTotal : 0.00,
+        smallPizzaQty : 0,
+         mediumPizzaTotal : 0.00,
+         mediumPizzaQty : 0, 
+         largePizzaTotal : 0.00,
+         largePizzaQty : 0,
+         payNow : false,
+         paymentAmount : 0,
+         paymentMessage : '',
+        cartTotal() {
+            return this.smallPizzaTotal + this.mediumPizzaTotal + this.largePizzaTotal
+        },
+        buySmallPizza() {
+            this.smallPizzaTotal += 29.99;
+            this.smallPizzaQty += 1
+        },
+
+        clearSmallPizza() {
+            if (this.smallPizzaQty > 0) {
+                this.smallPizzaTotal -= 29.99;
+            this.smallPizzaQty -= 1
+            }
+        },
+        buyMediumPizza() {
+            this.mediumPizzaTotal += 69.99;
+            this.mediumPizzaQty += 1
+        },
+        clearMediumPizza() {
+            if (this.mediumPizzaQty > 0) {
+                this.mediumPizzaTotal -= 69.99;
+            this.mediumPizzaQty -= 1
+            }
+        },
+
+        buyLargePizza() {
+            this.largePizzaTotal += 129.99;
+            this.largePizzaQty += 1
+        },
+        clearLargePizza() {
+            if (this.largePizzaQty > 0) {
+                this.largePizzaTotal -= 129.99;
+            this.largePizzaQty -= 1
+            }
+        },
+        makePayment() {
+            <!-- alert('!') -->
+            if (this.paymentAmount) {
+                this.paymentMessage = 'Sorry- that is not enough money!'
+               
+                setTimeout (() => {
+                    this.payNow = false;
+                    this.clearCart()
+                }, 3000); 
+
+            }
+            if (this.paymentAmount >= this.cartTotal()) {
+                this.paymentMessage = 'Enjoy your pizza!'
+                this.clearCart();
+            }   
+        },
+        clearCart() {
+        this.smallPizzaTotal = 0.00;
+        this.smallPizzaQty = 0;
+         this.mediumPizzaTotal = 0.00;
+         this.mediumPizzaQty = 0;
+         this.largePizzaTotal = 0.00;
+         this.largePizzaQty = 0;
+        }
+    }">
         <h1 class="header"> GCINILE'S PERFECT PIZZA</h1>
 
+
+
+
+
+        <div class="cart">
+            <a href="" class="cart-link">
+                <button x-on:click="showCart=true">
+                    <img src="data:image/jpeg;base64,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"
+                        width="20" alt="Show Cart">
+                </button>
+            </a>
+
+        </div>
+
+        <div class="cart-box">
+            <div class="the-cart" x-show="showCart">
+                <div>
+                    <button x-on:click="showCart=false">Close cart</button>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+                <table>
+                    <th>Shopping Cart</th>
+                    <tr>
+                        <td>Small pizza</td>
+                        <td><span x-text="smallPizzaQty"></span>
+                            <button x-on:click="buySmallPizza">+</button>
+                            <button x-on:click="clearSmallPizza">-</button>
+                            <div>
+                                R<span x-text="smallPizzaTotal.toFixed(2)"></span>
+                                </div>
+                            </td>
+                    
+                  
+                       
+                       
+                        
+                    </tr>
+                    <tr>
+                        <td>Medium Pizza</td>
+                        <td> <span x-text="mediumPizzaQty"></span>
+                            <button x-on:click="buyMediumPizza">+</button>
+                            <button x-on:click="clearMediumPizza">-</button>
+                            <div>
+                                R<span x-text="mediumPizzaTotal.toFixed(2)"></span>
+                            </div> 
+                        </td>
+                        
+                    </tr>
+
+                    <tr>
+                        <td>Large Pizza</td>
+                        <td> <span x-text="mediumPizzaQty"></span>
+                            <button x-on:click="buyMediumPizza">+</button>
+                            <button x-on:click="clearMediumPizza">-</button>
+                            <div>
+                                R<span x-text="mediumPizzaTotal.toFixed(2)"></span>
+                            </div> 
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td>Total Cost</td>
+                        <td><div>
+                            R<span x-text="cartTotal().toFixed(2)"></span>
+                        </div></td>
+                    </tr>   
+
+                    <tr>
+                 <td class="messsage">
+                    <div x-show="payNow">
+                        <div class="Message-display">
+                            <div>
+                                <div class="message" x-text="paymentMessage">
+                                    
+                                </div>
+                                <label for="">Payment amount</label>
+                            <input class="input" type="number" placeholder="Payment amount" x-model="paymentAmount">
+                            <button x-on:click="makePayment" class="btn">Check Out</button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <button x-show="!payNow" x-on:click="payNow=true" class="btn">PAY</button>
+                   </td>
+                   
+
+
+
+                </table>
+            </div>
+        </div>
+
+
         <div class="Pizzas">
-
-
-
-
-
 
             <div class="Large_Pizza">
                 <h2> Large Pizza</h2>
@@ -39,7 +207,9 @@
                     <div>
                         Sweet and Sour rib
                     </div>
-
+                    <div small-button>
+                        <button class="btn" x-on:click="buyLargePizza">
+                            Order </button>
 
                 </div>
 
@@ -47,13 +217,14 @@
 
 
             </div>
+        </div>
 
 
 
 
             <div class="medium_Pizza">
                 <h2>Medium Pizza</h2>
-                <img src="https://c.tenor.com/0xn-VNFkApYAAAAC/21-pizza.gif" width="250" height="180" >
+                <img src="https://c.tenor.com/0xn-VNFkApYAAAAC/21-pizza.gif" width="250" height="180">
                 <h3>R89.00</h3>
 
 
@@ -71,14 +242,18 @@
 
 
                 </div>
+                <div medium-button>
+                    <button class="btn" x-on:click="buyMediumPizza">
+                        Order </button>
             </div>
+           </div>
 
 
 
             <div class="Small-pizza">
                 <h2> Small Pizza</h2>
-                <img src="https://i.gifer.com/34vB.gif" width="250" height="180" >
-                
+                <img src="https://i.gifer.com/34vB.gif" width="250" height="180">
+
                 <h3>R29</h3>
 
 
@@ -96,7 +271,9 @@
 
 
                 </div>
-
+                <div small-button>
+                    <button class="btn" x-on:click="buySmallPizza">
+                        Order </button>
 
             </div>
         </div>
@@ -105,14 +282,14 @@
         <div class="Contact_details">
             <h2>Contact Details</h2>
 
-            Contact us at : 0769344287/0658249095
+            Contact us at : 0769344287
             <div>
                 Email adress : gicinilecordecia@gmail.com
             </div>
             <div>
-             2 Herb street 
-        
-             New Doornfontein 
+                2 Herb street
+
+                New Doornfontein
 
             </div>
         </div>
