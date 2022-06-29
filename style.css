@@ -84,6 +84,7 @@ body {
       }
     .shop{
         text-align: center;
-        
+        display: flex;
+
     }
         
