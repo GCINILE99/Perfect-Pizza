@@ -55,8 +55,9 @@ body {
         text-align: center;
     }
     @media(min-width:720px){
-        .Pizzas {
-            display:flex
+       .Pizzas {
+            display:flex;
+            
         }
     }
     .clearfix{
@@ -87,4 +88,8 @@ body {
         display: flex;
 
     }
-        
+    
+    
+    /* .Pizzas{
+        display: flex;
+    } */
